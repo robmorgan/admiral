@@ -5,6 +5,7 @@ import (
 	"sort"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/dynport/gocli"
@@ -29,20 +30,14 @@ func (r *hostsList) Run() error {
 	t := gocli.NewTable()
 	t.Add("id", "launch_time", "ami", "name", "ip", "type", "revision", "role")
 
-	var instances []*ec2.Instance
-	for idx := range resp.Reservations {
-		for _, inst := range resp.Reservations[idx].Instances {
-			instances = append(instances, inst)
-		}
-	}
-
-	for _, h := range instances {
-		fmt.Printf("%v", h.Tags)
+	instances, _ := awsutil.ValuesAtPath(resp, "Reservations[].Instances[]")
+	for _, instance := range instances {
+		// fmt.Printf("%v", instance)
+		h := instance.(*ec2.Instance)
 		tags := aggregateTags(h.Tags)
 		// TODO - calculate role from tags
 		role := gocli.Red("NONE")
 		t.Add(h.InstanceId, h.LaunchTime.Format("2006-01-02T15:04"), h.ImageId, tags["Name"], h.PrivateIpAddress, h.InstanceType, "aabbcc", role)
-		//fmt.Printf("%v", *inst)
 	}
 
 	t.SortBy = 1
