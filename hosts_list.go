@@ -19,7 +19,7 @@ func (r *hostsList) Run() error {
 	// Create an EC2 service object in the "eu-west-1" region
 	// Note that you can also configure your region globally by
 	// exporting the AWS_REGION environment variable
-	svc := ec2.New(session.New(), &aws.Config{Region: aws.String("eu-west-1")})
+	svc := ec2.New(session.New(), &aws.Config{})
 
 	// we are only concerned with running instances
 	filterChain := &ec2.DescribeInstancesInput{

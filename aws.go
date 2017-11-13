@@ -6,7 +6,7 @@ import (
 )
 
 func awsConfig() (*aws.Config, error) {
-	return &aws.Config{Region: aws.String("eu-west-1")}, nil
+	return &aws.Config{}, nil
 }
 
 type config struct {
