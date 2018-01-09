@@ -44,9 +44,9 @@ func (r *hostsList) Run() error {
 		panic(err)
 	}
 
-	// id launch_time ami name ip type revision role
+	// id launch_time ami name ip type role
 	t := gocli.NewTable()
-	t.Header("id", "launch_time", "ami", "name", "ip", "public_ip", "type", "revision", "role")
+	t.Header("id", "launch_time", "ami", "name", "ip", "public_ip", "type", "role")
 
 	instances, _ := awsutil.ValuesAtPath(resp, "Reservations[].Instances[]")
 	for _, instance := range instances {
@@ -54,7 +54,7 @@ func (r *hostsList) Run() error {
 		tags := aggregateTags(h.Tags)
 		// TODO - calculate role from tags
 		role := gocli.Red("NONE")
-		t.Add(h.InstanceId, h.LaunchTime.Format("2006-01-02T15:04"), h.ImageId, tags["Name"], h.PrivateIpAddress, h.PublicIpAddress, h.InstanceType, "aabbcc", role)
+		t.Add(h.InstanceId, h.LaunchTime.Format("2006-01-02T15:04"), h.ImageId, tags["Name"], h.PrivateIpAddress, h.PublicIpAddress, h.InstanceType, role)
 	}
 
 	t.SortBy = 1
