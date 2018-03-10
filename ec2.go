@@ -41,7 +41,6 @@ func GetInstanceName(instance *ec2.Instance) string {
 		return val
 	}
 	return "(unknown)"
-
 }
 
 func aggregateTags(tags []*ec2.Tag) map[string]string {
