@@ -17,14 +17,14 @@ $ go get -u -v github.com/robmorgan/admiral
 
 ```
 $ admiral hosts list
-$ admiral containers list production-app
+$ admiral tasks list production-app
 ```
 
 Or use the short-hand syntax:
 
 ```
 $ admiral h l
-$ admiral c l production-app
+$ admiral t l production-app
 ```
 
 ## Contributing

@@ -20,11 +20,11 @@ type containerInstance struct {
 	Ec2PrivateIp         *string
 }
 
-type containersList struct {
+type tasksList struct {
 	Cluster string `cli:"arg"`
 }
 
-func (r *containersList) Run() error {
+func (r *tasksList) Run() error {
 	if r.Cluster == "" {
 		return fmt.Errorf("You must specify an ECS cluster")
 	}
